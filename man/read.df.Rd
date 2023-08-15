@@ -18,5 +18,5 @@ A data.frame containing the contents of filename
 Function to read in data frames with strings as factors = FALSE
 }
 \examples{
-df<-read.df(system.file("extdata", "exdf.txt", package = "spfTools"),sep='\\t',header=TRUE)
+df<-read.df(system.file("extdata", "exdf.txt", package = "spfTools"),sep='\t',header=TRUE)
 }
