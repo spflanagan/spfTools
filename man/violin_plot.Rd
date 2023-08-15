@@ -4,12 +4,31 @@
 \alias{violin_plot}
 \title{Create violin plots with}
 \usage{
-violin_plot(x, ..., range = 1.5, h = NULL, ylim = NULL,
-  names = NULL, horizontal = FALSE, col = "magenta",
-  border = "black", lty = 1, lwd = 1, rectCol = "black",
-  colMed = "white", pchMed = 19, at, add = FALSE, wex = 1,
-  drawRect = TRUE, plot.axes = TRUE, axis.box = FALSE,
-  plot.ann = TRUE)
+violin_plot(
+  x,
+  ...,
+  range = 1.5,
+  h = NULL,
+  ylim = NULL,
+  names = NULL,
+  horizontal = FALSE,
+  col = "magenta",
+  border = "black",
+  lty = 1,
+  lwd = 1,
+  rectCol = "black",
+  colMed = "white",
+  pchMed = 19,
+  at,
+  add = FALSE,
+  wex = 1,
+  drawRect = TRUE,
+  plot.axes = TRUE,
+  axis.box = FALSE,
+  plot.ann = TRUE,
+  summaryLines = NULL,
+  axis.bty = "L"
+)
 }
 \arguments{
 \item{x}{Data to plot}
@@ -53,6 +72,10 @@ violin_plot(x, ..., range = 1.5, h = NULL, ylim = NULL,
 \item{axis.box}{Add the axis box}
 
 \item{plot.ann}{Add the annotations to the plot}
+
+\item{summaryLines}{Add lines at values given by vector (default is FALSE)}
+
+\item{axis.bty}{The box type for the box around the plot window. Default is 'L' but other options are 'o', 'C', '7', ']', 'U', and 'n'.}
 }
 \value{
 Optionally returns the summary statistics of the data.
@@ -69,5 +92,5 @@ si<-0.6
 bimodal<-c(rnorm(1000,-mu,si),rnorm(1000,mu,si))
 uniform<-runif(2000,-4,4)
 normal<-rnorm(2000,0,3)
-gwsca.vioplot(bimodal,uniform,normal,col=c("red","blue","green"))
+violin_plot(bimodal,uniform,normal,col=c("red","blue","green"))
 }
