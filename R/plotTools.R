@@ -36,9 +36,11 @@ outer_legend <- function(...) {
 #' @param add Add the plot or not
 #' @param wex wex
 #' @param drawRect Add a rectangle to the figure
+#' @param summaryLines Add lines at values given by vector (default is FALSE)
 #' @param plot.axes Whether or not to plot axes
 #' @param axis.box Add the axis box
 #' @param plot.ann Add the annotations to the plot
+#' @param axis.bty The box type for the box around the plot window. Default is 'L' but other options are 'o', 'C', '7', ']', 'U', and 'n'.
 #' @return Optionally returns the summary statistics of the data.
 #' @note Modified from vioplot() in library(vioplot)
 #' @examples
@@ -47,13 +49,31 @@ outer_legend <- function(...) {
 #' bimodal<-c(rnorm(1000,-mu,si),rnorm(1000,mu,si))
 #' uniform<-runif(2000,-4,4)
 #' normal<-rnorm(2000,0,3)
-#' gwsca.vioplot(bimodal,uniform,normal,col=c("red","blue","green"))
+#' violin_plot(bimodal,uniform,normal,col=c("red","blue","green"))
 #' @import sm
 #' @export
-violin_plot <- function(x,...,range=1.5,h=NULL,ylim=NULL,names=NULL, horizontal=FALSE,
-                          col="magenta", border="black", lty=1, lwd=1, rectCol="black", colMed="white", pchMed=19, at, add=FALSE, wex=1,
-                          drawRect=TRUE,plot.axes=TRUE,axis.box=FALSE,plot.ann=TRUE)
+violin_plot <- function(x,...,
+                        range=1.5,
+                        h=NULL,
+                        ylim=NULL,
+                        names=NULL,
+                        horizontal=FALSE,
+                        col="magenta",
+                        border="black",
+                        lty=1, lwd=1,
+                        rectCol="black",
+                        colMed="white",
+                        pchMed=19, at,
+                        add=FALSE,
+                        wex=1,
+                        drawRect=TRUE,
+                        plot.axes=TRUE,
+                        axis.box=FALSE,
+                        plot.ann=TRUE,
+                        summaryLines=NULL,
+                        axis.bty='L')
 {
+  requireNamespace("sm")
   # process multiple datas
   datas <- list(x,...)
   n <- length(datas)
@@ -165,7 +185,7 @@ violin_plot <- function(x,...,range=1.5,h=NULL,ylim=NULL,names=NULL, horizontal=
       if(plot.axes){
         if(plot.ann){
           axis(2)
-          axis(1,at = at, label=label )
+          axis(1,at = at, labels=label )
         }else{
           axis(2,labels=F)
           axis(1,at = at, labels=F )
@@ -190,6 +210,16 @@ violin_plot <- function(x,...,range=1.5,h=NULL,ylim=NULL,names=NULL, horizontal=
         # plot median point
         points( at[i], med[i], pch=pchMed, col=colMed )
       }
+
+      if(!is.null(summaryLines)){
+
+        for(sl in summaryLines){
+          diffs<- abs(base[[i]]-sl)
+          ht<-height[[i]][which.min(diffs)]+(sd(height[[i]])/5)
+          lines( c(at[i]-ht,at[i]+ht),
+                 c(sl, sl) ,lwd=lwd, lty=lty,col=border[i])
+        }
+      }
     }
 
   }
@@ -199,7 +229,7 @@ violin_plot <- function(x,...,range=1.5,h=NULL,ylim=NULL,names=NULL, horizontal=
       if(plot.axes){
         if(plot.ann){
           axis(2)
-          axis(1,at = at, label=label )
+          axis(1,at = at, labels=label )
         }else{
           axis(2,labels=F)
           axis(1,at = at, labels=F )
@@ -224,7 +254,19 @@ violin_plot <- function(x,...,range=1.5,h=NULL,ylim=NULL,names=NULL, horizontal=
         # plot median point
         points( med[i], at[i], pch=pchMed, col=colMed )
       }
+
+      if(!is.null(summaryLines)){
+
+        for(sl in summaryLines){
+          diffs<- abs(base[[i]]-sl)
+          ht<-height[[i]][which.min(diffs)]+(sd(height[[i]])/5)
+          lines( c(at[i]-ht,at[i]+ht),
+                 c(sl, sl) ,lwd=lwd, lty=lty,col=border[i])
+        }
+      }
+
     }
+
   }
   invisible (list( upper=upper, lower=lower, median=med, q1=q1, q3=q3))
 }
