@@ -8,7 +8,7 @@
 #' @export
 #' @import stats
 sem<-function(x){
-  if(all(is.na(x)) || is.null(x) || length(x)==0) return(x)
+  if(all(is.na(x)) || is.null(x) || length(x)==0) return(NA)
   x<-as.numeric(x)
   x<-x[!is.na(x)]
   n<-length(x)
