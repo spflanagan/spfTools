@@ -8,7 +8,7 @@
 spfTools is an [R](https://www.r-project.org) package with R functions that I
 find to be useful and which I repeatedly use.
 
-Install using `devtools::install_github("https://github.com/spflanagan/spfTools/")
+Install using `devtools::install_github("https://github.com/spflanagan/spfTools/")`
 
 ---
 
