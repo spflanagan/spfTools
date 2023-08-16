@@ -14,11 +14,11 @@ Depends:
   graphics,
   grDevices,
   stats,
-	testthat,
   utils
 Imports:
 	sm,
 	scales,
 	knitr,
-	pander
+	pander,
+	testthat
 VignetteBuilder: knitr
